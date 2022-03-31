@@ -1,4 +1,5 @@
+import FormRegister from "../components/FormRegister";
 export const CRUDPage = () => {
-  return <h1>CRUD PAGE</h1>;
+  return <FormRegister />;
 };
 export default CRUDPage;

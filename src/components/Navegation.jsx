@@ -1,30 +1,27 @@
+import { Link } from "react-router-dom";
 export const Navegation = () => {
   return (
     <nav className="dash-nav-list">
-      <a href="/inicio" className="dash-nav-item" data-link>
+      <Link to="/" className="dash-nav-item">
         <i className="fas fa-home"></i> Inicio
-      </a>
+      </Link>
 
       <div className="dash-nav-dropdown">
-        <a href="#" className="dash-nav-item dash-nav-dropdown-toggle">
+        <Link to="#!" className="dash-nav-item dash-nav-dropdown-toggle">
           <i className="fas fa-cube"></i> Inventario
-        </a>
+        </Link>
         <div className="dash-nav-dropdown-menu">
-          <a
-            href="/administracion"
-            className="dash-nav-dropdown-item"
-            data-link
-          >
+          <Link to="/administracion" className="dash-nav-dropdown-item">
             Control Insumos
-          </a>
-          <a href="/buscar" className="dash-nav-dropdown-item" data-link>
+          </Link>
+          <Link to="/buscar" className="dash-nav-dropdown-item">
             Ver Insumos
-          </a>
+          </Link>
         </div>
       </div>
-      <a href="/reportes" className="dash-nav-item" data-link>
+      <Link to="/reportes" className="dash-nav-item">
         <i className="fas fa-home"></i> Reportes
-      </a>
+      </Link>
     </nav>
   );
 };

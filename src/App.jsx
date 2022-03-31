@@ -3,7 +3,7 @@ import HomePage from "./pages/HomePage";
 import CRUDPage from "./pages/CRUDPage";
 import NavBar from "./components/Navbar";
 import HBar from "./components/HBar";
-import FormRegister from "./components/FormRegister";
+import { Outlet } from "react-router-dom";
 
 export const App = () => {
   return (
@@ -13,8 +13,7 @@ export const App = () => {
         <HBar />
         <main className="dash-content">
           <div className="container-fluid">
-            <h1>INSUMOS TIC</h1>
-            <FormRegister />
+            <Outlet />
           </div>
         </main>
       </div>
