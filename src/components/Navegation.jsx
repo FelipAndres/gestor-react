@@ -14,7 +14,7 @@ export const Navegation = () => {
           <Link to="/administracion" className="dash-nav-dropdown-item">
             Control Insumos
           </Link>
-          <Link to="/buscar" className="dash-nav-dropdown-item">
+          <Link to="/insumos" className="dash-nav-dropdown-item">
             Ver Insumos
           </Link>
         </div>

@@ -1,6 +1,3 @@
-import { Route } from "wouter";
-import HomePage from "./pages/HomePage";
-import CRUDPage from "./pages/CRUDPage";
 import NavBar from "./components/Navbar";
 import HBar from "./components/HBar";
 import { Outlet } from "react-router-dom";

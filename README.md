@@ -1,0 +1,1 @@
+- capturar datos de los inputs de los formuarlios
