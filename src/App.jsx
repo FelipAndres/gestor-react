@@ -1,20 +1,31 @@
 import NavBar from "./components/Navbar";
 import HBar from "./components/HBar";
-import { Outlet } from "react-router-dom";
+import CRUDPage from "./pages/CRUDPage";
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/404Page";
+import InsumosPage from "./pages/InsumosPage";
+import ReportesPage from "./pages/ReportesPage";
+import {Route, Routes } from "react-router-dom";
 
 export const App = () => {
   return (
-    <div className="dash">
+    <>
       <NavBar />
       <div className="dash-app">
         <HBar />
         <main className="dash-content">
           <div className="container-fluid">
-            <Outlet />
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path="administracion" element={<CRUDPage />} />
+            <Route path="insumos" element={<InsumosPage />} />
+            <Route path="reportes" element={<ReportesPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
           </div>
         </main>
       </div>
-    </div>
+    </>
   );
 };
 export default App;

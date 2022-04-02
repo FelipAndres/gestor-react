@@ -3,18 +3,22 @@ import { useState } from "react";
 
 export const FormRegister = () => {
   const [inputs, setInputs] = useState({});
-  const [tipos] = useState("Tipo");
 
   const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-    //setTipos(event.name.value);
+    const {name, value} = event.target
+    setInputs((prevValues) => ({ ...prevValues, [name]: value }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(inputs);
+    
   };
+
+  function handleDelete(event) {
+    event.preventDefault()
+    console.log("delete", inputs)
+  }
+
   return (
     <div className="row">
       <div className="col-xl-12">
@@ -42,7 +46,7 @@ export const FormRegister = () => {
                 <div className="form-group col-md-3">
                   <label htmlFor="tipo">Tipo</label>
                   <select
-                    value={tipos.tipo}
+                    value={inputs.tipo}
                     name="tipo"
                     onChange={handleChange}
                     className="form-control"
@@ -104,7 +108,7 @@ export const FormRegister = () => {
                   ></input>
                 </div>
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button onClick={handleDelete}className="btn btn-primary">
                 Registrar
               </button>
             </form>
