@@ -1,22 +1,33 @@
-import "../Spur.css";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import "../Spur.css";
+
+const url_api = "http://localhost:5000/api/insumos";
 
 export const FormRegister = () => {
   const [inputs, setInputs] = useState({});
-
   const handleChange = (event) => {
-    const {name, value} = event.target
+    const { name, value } = event.target;
     setInputs((prevValues) => ({ ...prevValues, [name]: value }));
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+    const request = new Request(url_api, {
+      method: "POST",
+      body: JSON.stringify(inputs),
+      headers: new Headers({
+        "Content-type": "application/json",
+      }),
+    });
+    fetch(request)
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .then((res) => toast.success("Registro con éxito"))
+      .catch((err) => toast.error("Hubo un problema al registrar"));
   };
-
   function handleDelete(event) {
-    event.preventDefault()
-    console.log("delete", inputs)
+    event.preventDefault();
+    console.log("delete", inputs);
   }
 
   return (
@@ -53,6 +64,7 @@ export const FormRegister = () => {
                   >
                     <option value="Tinta">Tinta</option>
                     <option value="Toner">Toner</option>
+                    <option value="Master">Master</option>
                     <option value="Fijo">Fijo</option>
                     <option value="General">General</option>
                   </select>
@@ -108,9 +120,10 @@ export const FormRegister = () => {
                   ></input>
                 </div>
               </div>
-              <button onClick={handleDelete}className="btn btn-primary">
+              <button onClick={handleSubmit} className="btn btn-primary">
                 Registrar
               </button>
+              <Toaster position="bottom-center" />
             </form>
           </div>
         </div>
