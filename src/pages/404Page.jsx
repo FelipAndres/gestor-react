@@ -3,6 +3,6 @@ export const NotFoundPage = () => {
     <main>
       <h1>NO HAY NADA ACA 4040 NOT FOUND PERRO</h1>
     </main>
-  );
-};
-export default NotFoundPage;
+  )
+}
+export default NotFoundPage
