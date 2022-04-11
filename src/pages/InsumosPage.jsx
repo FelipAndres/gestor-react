@@ -19,6 +19,7 @@ export const InsumosPage = () => {
       }
       const datos = await res.json()
       setInsumos(datos)
+      console.log(datos)
     } catch (error) {
       toast.error('Hubo un problema' + error)
     }
