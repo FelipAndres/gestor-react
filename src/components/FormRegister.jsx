@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import '../Spur.css'
-
-const apiUrl = 'http://localhost:5000/api/insumos'
+import FamiliaProductos from '../components/FamiliaProductos'
+import FabricantesProductos from '../components/FabricantesProductos'
+const apiUrl = 'http://localhost:5000/api/productos'
 
 export const FormRegister = () => {
   const [inputs, setInputs] = useState({})
@@ -12,7 +13,7 @@ export const FormRegister = () => {
   }
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const request = new Request(apiUrl, {
+    const postRequest = new Request(apiUrl, {
       method: 'POST',
       body: JSON.stringify(inputs),
       headers: new Headers({
@@ -20,9 +21,12 @@ export const FormRegister = () => {
       })
     })
     try {
-      const insumos = await fetch(request)
-      insumos.json()
-      toast.success('Registro con éxito')
+      const request = await fetch(postRequest)
+      if (request.ok) {
+        toast.success('Registro con éxito')
+      } else {
+        throw new Error(request.status)
+      }
     } catch (error) {
       toast.error('Hubo un problema al registrar', error)
     }
@@ -31,7 +35,6 @@ export const FormRegister = () => {
   //   event.preventDefault()
   //   console.log('delete', inputs)
   // }
-
   return (
     <div className='row'>
       <div className='col-xl-12'>
@@ -40,7 +43,7 @@ export const FormRegister = () => {
             <div className='spur-card-icon'>
               <i className='fas fa-chart-bar' />
             </div>
-            <div className='spur-card-title'>Registro de Insumos</div>
+            <div className='spur-card-title'>Registro de Productos</div>
           </div>
           <div className='card-body'>
             <form onSubmit={handleSubmit}>
@@ -69,32 +72,39 @@ export const FormRegister = () => {
                   />
                 </div>
                 <div className='form-group col-md-3'>
-                  <label htmlFor='familia_producto'>Tipo</label>
+                  <label htmlFor='familia_producto_id'>Tipo</label>
                   <select
-                    value={inputs.familia_producto}
-                    name='familia_producto'
+                    value={inputs.familia_producto_id || ''}
+                    name='familia_producto_id'
                     onChange={handleChange}
                     className='form-control'
                   >
-                    <option value='Tinta'>Tinta</option>
-                    <option value='Toner'>Toner</option>
-                    <option value='Master'>Master</option>
-                    <option value='Fijo'>Fijo</option>
-                    <option value='General'>General</option>
+                    <FamiliaProductos />
                   </select>
                 </div>
-                <div className='form-group col-md-3'>
+                <div className='form-group col-md-6'>
                   <label htmlFor='stock'>Cantidad</label>
                   <input
                     type='number'
                     min='1'
                     name='stock'
                     className='form-control'
-                    placeholder=''
+                    placeholder='1'
                     value={inputs.stock || ''}
                     onChange={handleChange}
                     required
                   />
+                </div>
+                <div className='form-group col-md-3'>
+                  <label htmlFor='fabricante_id'>Fabricante</label>
+                  <select
+                    value={inputs.fabricante_id || ''}
+                    name='fabricante_id'
+                    onChange={handleChange}
+                    className='form-control'
+                  >
+                    <FabricantesProductos />
+                  </select>
                 </div>
                 <div className='form-group col-md-3'>
                   <label htmlFor='fecha_registro'>Fecha de Registro</label>

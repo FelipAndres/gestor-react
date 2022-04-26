@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import Table from '../components/Table'
-const apiUrl = 'http://localhost:5000/api/insumos'
+const apiUrl = 'http://localhost:5000/api/productos'
 
 export const InsumosPage = () => {
   // const [datos, setDatos] = useState([]);
-  const [insumos, setInsumos] = useState([])
-  useEffect(() => fechtInsumos(), [])
+  const [productos, setProductos] = useState([])
+  useEffect(() => fechtProductos(), [])
 
-  const fechtInsumos = async () => {
+  const fechtProductos = async () => {
     try {
       const res = await fetch(apiUrl)
       if (res.ok) {
@@ -18,7 +18,7 @@ export const InsumosPage = () => {
         throw new Error(res.status)
       }
       const datos = await res.json()
-      setInsumos(datos)
+      setProductos(datos)
       console.log(datos)
     } catch (error) {
       toast.error('Hubo un problema' + error)
@@ -33,10 +33,10 @@ export const InsumosPage = () => {
             <div className='spur-card-icon'>
               <i className='fas fa-table' />
             </div>
-            <div className='spur-card-title'>Todos los Insumos</div>
+            <div className='spur-card-title'>Todos los Productos</div>
           </div>
           <div className='card-body '>
-            <Table insumos={insumos} />
+            <Table productos={productos} />
             <Toaster position='bottom-center' />
           </div>
         </div>
