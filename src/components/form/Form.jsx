@@ -1,21 +1,23 @@
-import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import '../Spur.css'
-import FamiliaProductos from '../components/FamiliaProductos'
-import FabricantesProductos from '../components/FabricantesProductos'
+
+import '../../Spur.css'
+import FamiliaProductos from './FamiliaProductos'
+import FabricantesProductos from './FabricantesProductos'
+
 const apiUrl = 'http://localhost:5000/api/productos'
 
-export const FormRegister = () => {
-  const [inputs, setInputs] = useState({})
+export const Form = ({ productos, setProductos, producto, setProducto }) => {
+  // handle inputs on form
   const handleChange = (event) => {
     const { name, value } = event.target
-    setInputs((prevValues) => ({ ...prevValues, [name]: value }))
+    setProductos((prevValues) => ({ ...prevValues, [name]: value }))
   }
+  // make post request with fecht api
   const handleSubmit = async (event) => {
     event.preventDefault()
     const postRequest = new Request(apiUrl, {
       method: 'POST',
-      body: JSON.stringify(inputs),
+      body: JSON.stringify(productos),
       headers: new Headers({
         'Content-type': 'application/json'
       })
@@ -55,7 +57,7 @@ export const FormRegister = () => {
                     className='form-control'
                     name='nombre'
                     placeholder='Toner...'
-                    value={inputs.nombre || ''}
+                    value={productos.nombre || ''}
                     onChange={handleChange}
                   />
                 </div>
@@ -66,7 +68,7 @@ export const FormRegister = () => {
                     name='descripcion'
                     className='form-control'
                     placeholder='En mal estado'
-                    value={inputs.descripcion || ''}
+                    value={productos.descripcion || ''}
                     onChange={handleChange}
                     required
                   />
@@ -74,7 +76,7 @@ export const FormRegister = () => {
                 <div className='form-group col-md-3'>
                   <label htmlFor='familia_producto_id'>Tipo</label>
                   <select
-                    value={inputs.familia_producto_id || ''}
+                    value={productos.familia_producto_id || ''}
                     name='familia_producto_id'
                     onChange={handleChange}
                     className='form-control'
@@ -90,7 +92,7 @@ export const FormRegister = () => {
                     name='stock'
                     className='form-control'
                     placeholder='1'
-                    value={inputs.stock || ''}
+                    value={productos.stock || ''}
                     onChange={handleChange}
                     required
                   />
@@ -98,7 +100,7 @@ export const FormRegister = () => {
                 <div className='form-group col-md-3'>
                   <label htmlFor='fabricante_id'>Fabricante</label>
                   <select
-                    value={inputs.fabricante_id || ''}
+                    value={productos.fabricante_id || ''}
                     name='fabricante_id'
                     onChange={handleChange}
                     className='form-control'
@@ -112,7 +114,7 @@ export const FormRegister = () => {
                     type='date'
                     name='fecha_registro'
                     className='form-control'
-                    value={inputs.fecha_registro || ''}
+                    value={productos.fecha_registro || ''}
                     onChange={handleChange}
                     required
                   />
@@ -124,7 +126,7 @@ export const FormRegister = () => {
                     name='estado'
                     className='form-control'
                     placeholder='Dado de Baja'
-                    value={inputs.estado || ''}
+                    value={productos.estado || ''}
                     onChange={handleChange}
                     required
                   />
@@ -143,4 +145,4 @@ export const FormRegister = () => {
   )
 }
 
-export default FormRegister
+export default Form
