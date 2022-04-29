@@ -20,7 +20,7 @@ export const Navegation = () => {
         </div>
       </div>
       <Link to='/reportes' className='dash-nav-item'>
-        <i className='fas fa-home' /> Reportes
+        <i className='fas fa-file-download' /> Reportes
       </Link>
     </nav>
   )

@@ -1,28 +1,12 @@
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
 import '../Spur.css'
-const apiUrl = 'http://localhost:5000/api/productos'
+// const apiUrl = 'http://localhost:5000/api/productos'
 
 const handleSubmit = async (productoId) => {
   // event.preventDefault()
-  const putRequest = new Request(apiUrl, {
-    method: 'PUT',
-    body: JSON.stringify(),
-    headers: new Headers({
-      'Content-type': 'application/json'
-    })
-  })
-  try {
-    const request = await fetch(putRequest)
-    if (request.ok) {
-      toast.success('Registro con éxito')
-    } else {
-      throw new Error(request.status)
-    }
-  } catch (error) {
-    toast.error('Hubo un problema al registrar', error)
-  }
+  console.log(productoId)
 }
-const Table = ({ productos }) => {
+const Table = ({ datos }) => {
   return (
     <table className='table table-hover table-in-card'>
       <thead>
@@ -39,7 +23,7 @@ const Table = ({ productos }) => {
         </tr>
       </thead>
       <tbody>
-        {productos.map((producto) => (
+        {datos.map((producto) => (
           <tr key={producto.id}>
             <td>{producto.id}</td>
             <td>{producto.nombre}</td>

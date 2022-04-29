@@ -1,7 +1,7 @@
 import { Toaster } from 'react-hot-toast'
 import Table from '../components/Table'
 
-export const ProductosPage = (productos) => {
+export const ProductosPage = ({ productos }) => {
   console.log(typeof (productos))
   return (
     <div className='row'>

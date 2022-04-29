@@ -27,7 +27,6 @@ export const App = () => {
       }
       const datos = await res.json()
       setProductos(datos)
-      console.log(datos)
     } catch (error) {
       toast.error('Hubo un problema' + error)
     }
