@@ -1,4 +1,6 @@
-export const ReportesPage = () => {
-  return <h1>DESDE REPORTES</h1>
+export const ReportesPage = (productos) => {
+  return (
+    console.log(productos)
+  )
 }
 export default ReportesPage

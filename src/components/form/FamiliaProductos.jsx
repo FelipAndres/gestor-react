@@ -10,17 +10,16 @@ export const FamiliaProducto = () => {
   const fechtTipos = async () => {
     try {
       const res = await fetch(apiUrl)
-      if (res.ok) {
-        toast.success('Datos cargados tipos')
-        // return res.json();
-      } else {
+      if (!res.ok) {
         throw new Error(res.status)
       }
+      // toast.success('Datos cargados tipos')
+      // return res.json();
       const datos = await res.json()
       setTipos(datos)
       console.log(datos)
     } catch (error) {
-      toast.error('Hubo un problema' + error)
+      toast.error('Hubo un problema ' + error)
     }
   }
   return (

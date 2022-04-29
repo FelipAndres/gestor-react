@@ -1,12 +1,10 @@
 import toast, { Toaster } from 'react-hot-toast'
 
-import '../../Spur.css'
 import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
+import '../../Spur.css'
 
-const apiUrl = 'http://localhost:5000/api/productos'
-
-export const Form = ({ productos, setProductos, producto, setProducto }) => {
+export const Form = ({ productos, setProductos, producto, setProducto, apiURL }) => {
   // handle inputs on form
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -15,7 +13,7 @@ export const Form = ({ productos, setProductos, producto, setProducto }) => {
   // make post request with fecht api
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const postRequest = new Request(apiUrl, {
+    const postRequest = new Request(apiURL, {
       method: 'POST',
       body: JSON.stringify(productos),
       headers: new Headers({

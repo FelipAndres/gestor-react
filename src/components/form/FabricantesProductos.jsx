@@ -10,24 +10,29 @@ export const FabricantesProductos = () => {
   const fetchFabricantes = async () => {
     try {
       const res = await fetch(apiUrl)
-      if (res.ok) {
-        toast.success('Datos cargados fabricantes')
-        // return res.json();
-      } else {
+      if (!res.ok) {
         throw new Error(res.status)
+        // toast.success('Datos cargados fabricantes')
+        // return res.json();
       }
       const datos = await res.json()
       //  es mejor descontrouir el request pa solo usar lo que se necesita
       setFabricantes(datos)
       console.log()
     } catch (error) {
-      toast.error('Hubo un problema' + error)
+      toast.error('Hubo un problema ' + error)
     }
   }
   // por ahora el fecth es solo  a la tabla productos y  aqui estoy usando el fabricante_id, pero deberia ser a la tabla faabricante y el name
   return (
     <> <option value='Selecciona un fabricante'>Selecciona un fabricante</option>
-      {fabricantes.map((fabricantes) => <option key={fabricantes.id} value={fabricantes.id}>{fabricantes.nombre}</option>)}
+      {fabricantes.map((fabricantes) =>
+        <option
+          key={fabricantes.id}
+          value={fabricantes.id}
+        >
+          {fabricantes.nombre}
+        </option>)}
     </>
   )
 }

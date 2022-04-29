@@ -12,10 +12,10 @@ export const Navegation = () => {
         </Link>
         <div className='dash-nav-dropdown-menu'>
           <Link to='/administracion' className='dash-nav-dropdown-item'>
-            Registrar
+            Gestión
           </Link>
           <Link to='/productos' className='dash-nav-dropdown-item'>
-            Ver Insumos
+            Listado
           </Link>
         </div>
       </div>
