@@ -1,0 +1,19 @@
+.input-add{
+    width: 2rem;
+    height: max-content;
+}
+.stats-content{
+    justify-content: space-between;
+}
+.stats-input{
+    
+}
+.stats-btn{
+    
+}
+.btn-add-stock{
+    border-radius: 0.3rem;
+}
+.stats-prods{
+    flex-direction: column;
+}
