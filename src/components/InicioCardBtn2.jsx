@@ -1,6 +1,6 @@
 export const InicioCardBtn2 = (stock, setStock, handleChange) => {
   return (
-    <div className='col-xl-4'>
+    <div className='col-xl-6'>
       <form action=''>
         <div className='stats stats-warning'>
           <h3 className='stats-title'> Disminuye Stock </h3>

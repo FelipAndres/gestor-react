@@ -17,3 +17,20 @@
 .stats-prods{
     flex-direction: column;
 }
+/* Modal */
+.darkBG {
+  background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 115vh;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: grid;
+}
+.centered{
+    place-items: center;
+    padding: 8rem 10rem 8rem 18rem;
+    z-index: 99999;
+    display: block;
+}
