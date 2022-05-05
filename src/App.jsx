@@ -14,8 +14,14 @@ export const App = () => {
   const [productos, setProductos] = useState([])
   const [producto, setProducto] = useState({})
 
-  useEffect(() => fechtProductos(), [])
+  // handle inputs on form
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target
+  //   setProducto((producto) => ({ ...producto, [name]: value }))
+  //   setProductos(...producto)
+  // }
 
+  // fecht productos
   const fechtProductos = async () => {
     try {
       const res = await fetch(apiUrl)
@@ -32,6 +38,7 @@ export const App = () => {
       toast.error('Hubo un problema' + error)
     }
   }
+  useEffect(() => fechtProductos(), [producto])
 
   const apiUrl = 'http://localhost:5000/api/productos'
   return (
@@ -49,7 +56,7 @@ export const App = () => {
                   setProductos={setProductos}
                   producto={producto}
                   setProducto={setProducto}
-                  apiUrl={apiUrl}
+                  apiURL={apiUrl}
                                                />}
               />
               <Route path='productos' element={<ProductosPage productos={productos} />} />
