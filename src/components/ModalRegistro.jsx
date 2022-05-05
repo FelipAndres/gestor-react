@@ -14,10 +14,10 @@ const ModalRegistro = ({ producto, setProducto, apiURL, handleChange, isOpen, on
             producto={producto}
             setProducto={setProducto}
             apiURL={apiURL}
-            handleChange={handleChange}
           />
           <button
-            onClick={() => onClose}
+            className='btn btn-danger w-100 p-3'
+            onClick={onClose}
           >
             Cancelar
           </button>

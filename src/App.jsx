@@ -15,11 +15,11 @@ export const App = () => {
   const apiURL = 'http://localhost:5000/api/productos'
 
   // handle inputs on form
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setProducto((producto) => ({ ...producto, [name]: value }))
-    setProductos(...producto)
-  }
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target
+  //   setProducto((producto) => ({ ...producto, [name]: value }))
+  //   setProductos(...producto)
+  // }
   // fecht productos
   const fechtProductos = async () => {
     try {
@@ -36,7 +36,7 @@ export const App = () => {
       toast.error('Hubo un problema' + error)
     }
   }
-  useEffect(() => fechtProductos(), [])
+  useEffect(() => fechtProductos(), [producto])
 
   return (
     <>
@@ -57,8 +57,7 @@ export const App = () => {
                   setProductos={setProductos}
                   producto={producto}
                   setProducto={setProducto}
-                  apiURL={apiURL}
-                  handleChange={handleChange}
+                  apiURL={apiUrl}
                                                />}
               />
               <Route path='reportes' element={<ReportesPage productos={productos} />} />

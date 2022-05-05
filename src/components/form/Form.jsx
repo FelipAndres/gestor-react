@@ -1,16 +1,36 @@
 import toast, { Toaster } from 'react-hot-toast'
+import { useState } from 'react'
 
 import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
 import '../../Spur.css'
 
-export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
+export const Form = ({ setProducto, apiURL }) => {
   // make post request with fecht api
+
+  const [nombre, setNombre] = useState('')
+  const [descripcion, setDescripcion] = useState('')
+  const [familiaprod, setFamiliaprod] = useState('')
+  const [cantidad, setCantidad] = useState('')
+  const [fabricante, setFabricante] = useState('')
+  const [fecha, setFecha] = useState('')
+  const [estado, setEstado] = useState('')
+
+  const objProducto = {
+    nombre,
+    descripcion,
+    familiaprod,
+    cantidad,
+    fabricante,
+    fecha,
+    estado
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const postRequest = new Request(apiURL, {
       method: 'POST',
-      body: JSON.stringify(producto),
+      body: JSON.stringify(objProducto),
       headers: new Headers({
         'Content-type': 'application/json'
       })
@@ -18,6 +38,7 @@ export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
     try {
       const request = await fetch(postRequest)
       if (request.ok) {
+        setProducto({ objProducto })
         toast.success('Registro con éxito')
       } else {
         throw new Error(request.status)
@@ -25,11 +46,19 @@ export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
     } catch (error) {
       toast.error('Hubo un problema al registrar', error)
     }
+    // setNombre('')
+    // setDescripcion('')
+    // setFamiliaprod('')
+    // setCantidad('')
+    // setFabricante('')
+    // setFecha('')
+    // setEstado('')
   }
   // function handleDelete (event) {
   //   event.preventDefault()
   //   console.log('delete', inputs)
   // }
+
   return (
     <div className='card spur-card'>
       <div className='card-header'>
@@ -48,8 +77,8 @@ export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
                 className='form-control'
                 name='nombre'
                 placeholder='Toner...'
-                value={producto.nombre || ''}
-                onChange={handleChange}
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
               />
             </div>
             <div className='form-group col-md-6'>
@@ -59,17 +88,17 @@ export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
                 name='descripcion'
                 className='form-control'
                 placeholder='En mal estado'
-                value={producto.descripcion || ''}
-                onChange={handleChange}
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)
                 required
               />
             </div>
             <div className='form-group col-md-3'>
               <label htmlFor='familia_producto_id'>Tipo</label>
               <select
-                value={producto.familia_producto_id || ''}
+                value={familiaprod}
                 name='familia_producto_id'
-                onChange={handleChange}
+                onChange={(e) => setFamiliaprod(e.target.value)}
                 className='form-control'
               >
                 <FamiliaProductos />
@@ -83,17 +112,17 @@ export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
                 name='stock'
                 className='form-control'
                 placeholder='1'
-                value={producto.stock || ''}
-                onChange={handleChange}
+                value={cantidad}
+                onChange={(e) => setCantidad(e.target.value)}
                 required
               />
             </div>
             <div className='form-group col-md-3'>
               <label htmlFor='fabricante_id'>Fabricante</label>
               <select
-                value={producto.fabricante_id || ''}
+                value={fabricante}
                 name='fabricante_id'
-                onChange={handleChange}
+                onChange={(e) => setFabricante(e.target.value)}
                 className='form-control'
               >
                 <FabricantesProductos />
@@ -105,8 +134,8 @@ export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
                 type='date'
                 name='fecha_registro'
                 className='form-control'
-                value={producto.fecha_registro || ''}
-                onChange={handleChange}
+                value={fecha}
+                onChange={(e) => setFecha(e.target.value)}
                 required
               />
             </div>
@@ -117,8 +146,8 @@ export const Form = ({ producto, setProducto, apiURL, handleChange }) => {
                 name='estado'
                 className='form-control'
                 placeholder='Dado de Baja'
-                value={producto.estado || ''}
-                onChange={handleChange}
+                value={estado}
+                onChange={(e) => setEstado(e.target.value)}
                 required
               />
             </div>
