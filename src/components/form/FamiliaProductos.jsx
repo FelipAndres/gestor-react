@@ -17,7 +17,6 @@ export const FamiliaProducto = () => {
       // return res.json();
       const datos = await res.json()
       setTipos(datos)
-      console.log(datos)
     } catch (error) {
       toast.error('Hubo un problema ' + error)
     }

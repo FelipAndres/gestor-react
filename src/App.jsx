@@ -3,16 +3,16 @@ import toast from 'react-hot-toast'
 
 import NavBar from './components/Navbar'
 import HBar from './components/HorizontalBar'
-import CRUDPage from './pages/CRUDPage'
+import Productos from './pages/Productos'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/404Page'
-import ProductosPage from './pages/ProductosPage'
 import ReportesPage from './pages/ReportesPage'
 import { Route, Routes } from 'react-router-dom'
 
 export const App = () => {
   const [productos, setProductos] = useState([])
   const [producto, setProducto] = useState({})
+  const apiURL = 'http://localhost:5000/api/productos'
 
   // handle inputs on form
   // const handleChange = (event) => {
@@ -20,11 +20,10 @@ export const App = () => {
   //   setProducto((producto) => ({ ...producto, [name]: value }))
   //   setProductos(...producto)
   // }
-
   // fecht productos
   const fechtProductos = async () => {
     try {
-      const res = await fetch(apiUrl)
+      const res = await fetch(apiURL)
       if (res.ok) {
         toast.success('Datos cargados')
         // return res.json();
@@ -33,14 +32,12 @@ export const App = () => {
       }
       const datos = await res.json()
       setProductos(datos)
-      console.log(datos)
     } catch (error) {
       toast.error('Hubo un problema' + error)
     }
   }
   useEffect(() => fechtProductos(), [producto])
 
-  const apiUrl = 'http://localhost:5000/api/productos'
   return (
     <>
       <NavBar />
@@ -49,9 +46,13 @@ export const App = () => {
         <main className='dash-content'>
           <div className='container-fluid'>
             <Routes>
-              <Route path='/' element={<HomePage />} />
               <Route
-                path='administracion' element={<CRUDPage
+                path='/' element={<HomePage
+                  productos={productos}
+                                  />}
+              />
+              <Route
+                path='administracion' element={<Productos
                   productos={productos}
                   setProductos={setProductos}
                   producto={producto}
@@ -59,7 +60,6 @@ export const App = () => {
                   apiURL={apiUrl}
                                                />}
               />
-              <Route path='productos' element={<ProductosPage productos={productos} />} />
               <Route path='reportes' element={<ReportesPage productos={productos} />} />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>

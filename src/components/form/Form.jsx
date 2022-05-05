@@ -89,7 +89,7 @@ export const Form = ({ setProducto, apiURL }) => {
                 className='form-control'
                 placeholder='En mal estado'
                 value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
+                onChange={(e) => setDescripcion(e.target.value)
                 required
               />
             </div>
