@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
-import NavBar from './components/Navbar'
-import HBar from './components/HorizontalBar'
+import NavBar from './components/GeneralUI/Navbar'
+import HBar from './components/GeneralUI/HorizontalBar'
 import Productos from './pages/Productos'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/404Page'
 import ReportesPage from './pages/ReportesPage'
-import { Route, Routes } from 'react-router-dom'
 
 export const App = () => {
   const [productos, setProductos] = useState([])

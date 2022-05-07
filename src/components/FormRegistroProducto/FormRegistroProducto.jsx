@@ -5,7 +5,7 @@ import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
 import '../../Spur.css'
 
-export const Form = ({ setProducto, apiURL, onClose }) => {
+export const FormRegistroProducto = ({ setProducto, apiURL, onClose }) => {
   // make post request with fecht api
 
   const [nombre, setNombre] = useState('')
@@ -174,4 +174,4 @@ export const Form = ({ setProducto, apiURL, onClose }) => {
   )
 }
 
-export default Form
+export default FormRegistroProducto

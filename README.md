@@ -22,7 +22,7 @@ Sistema de gestion de inventario en minima escala, desarrollado para ser utiliza
 
 ## Instalación
 
-* npm install
+- npm install
 
 ## Scripts
 

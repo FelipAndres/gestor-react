@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
-import ModalRegistro from '../components/ModalRegistro'
-import TablaProductos from '../components/TablaProductos'
+import ModalRegistroProducto from '../components/ModalesRegistros/ModalRegistroProducto'
+import TablaProductos from '../components/Tablas/TablaProductos'
 
 export const Productos = ({ productos, producto, setProducto, apiURL, handleChange }) => {
   const [open, setOpen] = useState(false)
@@ -13,7 +13,7 @@ export const Productos = ({ productos, producto, setProducto, apiURL, handleChan
           <button onClick={() => setOpen(true)} className='btn btn-lg btn-primary'>
             Añadir nuevo
           </button>
-          <ModalRegistro
+          <ModalRegistroProducto
             producto={producto}
             setProducto={setProducto}
             apiURL={apiURL}

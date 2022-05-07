@@ -1,4 +1,4 @@
-import '../styles.css'
+import '../../styles.css'
 import NombreProducto from './NombresProductos'
 
 export const InicioCardBtn1 = (productos, stock, setStock, handleChange) => {

@@ -1,5 +1,5 @@
 // import { useEffect } from 'react'
-import '../Spur.css'
+import '../../Spur.css'
 
 const handleSubmit = async (productoId) => {
   // event.preventDefault()
