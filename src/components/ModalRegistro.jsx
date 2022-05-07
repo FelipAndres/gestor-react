@@ -4,14 +4,13 @@ import ReactDOM from 'react-dom'
 import Form from '../components/form/Form'
 import '../styles.css'
 
-const ModalRegistro = ({ producto, setProducto, apiURL, handleChange, isOpen, onClose }) => {
+const ModalRegistro = ({ setProducto, apiURL, isOpen, onClose }) => {
   if (!isOpen) return null
   return ReactDOM.createPortal(
     <>
       <div className='darkBG'>
         <div className='centered'>
           <Form
-            producto={producto}
             setProducto={setProducto}
             apiURL={apiURL}
           />

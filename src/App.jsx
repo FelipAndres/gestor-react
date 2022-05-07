@@ -57,7 +57,7 @@ export const App = () => {
                   setProductos={setProductos}
                   producto={producto}
                   setProducto={setProducto}
-                  apiURL={apiUrl}
+                  apiURL={apiURL}
                                                />}
               />
               <Route path='reportes' element={<ReportesPage productos={productos} />} />

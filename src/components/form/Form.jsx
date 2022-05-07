@@ -9,23 +9,26 @@ export const Form = ({ setProducto, apiURL }) => {
   // make post request with fecht api
 
   const [nombre, setNombre] = useState('')
+  // eslint-disable-next-line camelcase
+  const [familia_producto_id, setFamiliaprod] = useState('')
   const [descripcion, setDescripcion] = useState('')
-  const [familiaprod, setFamiliaprod] = useState('')
-  const [cantidad, setCantidad] = useState('')
-  const [fabricante, setFabricante] = useState('')
-  const [fecha, setFecha] = useState('')
   const [estado, setEstado] = useState('')
+  const [stock, setCantidad] = useState('')
+  // eslint-disable-next-line camelcase
+  const [fecha_registro, setFecha] = useState('')
+  // eslint-disable-next-line camelcase
+  const [fabricante_id, setFabricante] = useState('')
 
   const objProducto = {
     nombre,
+    familia_producto_id,
     descripcion,
-    familiaprod,
-    cantidad,
-    fabricante,
-    fecha,
-    estado
+    estado,
+    stock,
+    fecha_registro,
+    fabricante_id
   }
-
+  console.log(objProducto)
   const handleSubmit = async (event) => {
     event.preventDefault()
     const postRequest = new Request(apiURL, {
@@ -89,14 +92,15 @@ export const Form = ({ setProducto, apiURL }) => {
                 className='form-control'
                 placeholder='En mal estado'
                 value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)
+                onChange={(e) => setDescripcion(e.target.value)}
                 required
               />
             </div>
             <div className='form-group col-md-3'>
               <label htmlFor='familia_producto_id'>Tipo</label>
               <select
-                value={familiaprod}
+                // eslint-disable-next-line camelcase
+                value={familia_producto_id}
                 name='familia_producto_id'
                 onChange={(e) => setFamiliaprod(e.target.value)}
                 className='form-control'
@@ -112,7 +116,7 @@ export const Form = ({ setProducto, apiURL }) => {
                 name='stock'
                 className='form-control'
                 placeholder='1'
-                value={cantidad}
+                value={stock}
                 onChange={(e) => setCantidad(e.target.value)}
                 required
               />
@@ -120,7 +124,8 @@ export const Form = ({ setProducto, apiURL }) => {
             <div className='form-group col-md-3'>
               <label htmlFor='fabricante_id'>Fabricante</label>
               <select
-                value={fabricante}
+                // eslint-disable-next-line camelcase
+                value={fabricante_id}
                 name='fabricante_id'
                 onChange={(e) => setFabricante(e.target.value)}
                 className='form-control'
@@ -134,7 +139,8 @@ export const Form = ({ setProducto, apiURL }) => {
                 type='date'
                 name='fecha_registro'
                 className='form-control'
-                value={fecha}
+                // eslint-disable-next-line camelcase
+                value={fecha_registro}
                 onChange={(e) => setFecha(e.target.value)}
                 required
               />
