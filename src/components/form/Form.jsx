@@ -5,7 +5,7 @@ import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
 import '../../Spur.css'
 
-export const Form = ({ setProducto, apiURL }) => {
+export const Form = ({ setProducto, apiURL, onClose }) => {
   // make post request with fecht api
 
   const [nombre, setNombre] = useState('')
@@ -63,7 +63,7 @@ export const Form = ({ setProducto, apiURL }) => {
   // }
 
   return (
-    <div className='card spur-card'>
+    <div className='card spur-card appear-animate modal-xl'>
       <div className='card-header'>
         <div className='spur-card-icon'>
           <i className='fas fa-chart-bar' />
@@ -158,9 +158,14 @@ export const Form = ({ setProducto, apiURL }) => {
               />
             </div>
           </div>
-          <div className='form-row' />
-          <button onClick={handleSubmit} className='btn btn-primary'>
+          <button onClick={handleSubmit} className='btn btn-primary ml-2 float-right'>
             Registrar
+          </button>
+          <button
+            className='btn btn-danger float-right'
+            onClick={onClose}
+          >
+            Cancelar
           </button>
           <Toaster position='bottom-center' />
         </form>

@@ -17,6 +17,7 @@
 .stats-prods{
     flex-direction: column;
 }
+
 /* Modal */
 .darkBG {
   background-color: rgba(0, 0, 0, 0.5);
@@ -26,11 +27,22 @@
     top: 0;
     left: 0;
     position: fixed;
-    display: grid;
 }
-.centered{
-    place-items: center;
-    padding: 8rem 10rem 8rem 18rem;
-    z-index: 99999;
-    display: block;
+/*
+Modal Animation
+*/
+.appear-animate{
+-webkit-animation:appear 1.5s ease 0s 1 normal;
+-moz-animation:appear 1.5s ease 0s 1 normal;
+-ms-animation:appear 1.5s ease 0s 1 normal;
+animation:appear 1.5s ease 0s 1 normal;
+}
+
+@-webkit-keyframes appear {
+0%{ opacity: 0; -webkit-transform: scale3d(0.3, 0.3, 0.3); transform: scale3d(0.3, 0.3, 0.3); }
+60%{ opacity: 1; -webkit-transform: scale3d(1,1,1); transform: scale3d(1,1,1); }
+}
+@keyframes appear {
+0%{ opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+60%{ opacity: 1; transform: scale3d(1,1,1); }
 }
