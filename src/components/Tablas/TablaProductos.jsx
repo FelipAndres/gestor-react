@@ -1,11 +1,19 @@
-// import { useEffect } from 'react'
+import { useContext } from 'react'
+import { ProductoContext } from '../../ProductoContext'
 import '../../Spur.css'
 
-const handleSubmit = async (productoId) => {
-  // event.preventDefault()
-  // console.log(productoId)
-}
-const TablaProductos = ({ productos }) => {
+const TablaProductos = () => {
+  const { productos, setProducto, setIsOpen, setIsEdit } = useContext(ProductoContext)
+  const handleSubmit = async (productoId) => {
+    setIsEdit(true)
+    // event.preventDefault()
+    // console.log(productoId)
+    const searchId = productoId
+    // Finding producto object with id xxx
+    const searchObject = productos.find((producto) => producto.id === searchId)
+    // console.log(searchObject)
+    setProducto(searchObject)
+  }
   return (
     <>
       <table className='table table-hover table-in-card'>
@@ -37,6 +45,7 @@ const TablaProductos = ({ productos }) => {
                 <button
                   onClick={() => {
                     handleSubmit(producto.id)
+                    setIsOpen(true)
                   }} className='btn btn-warning'
                 >Editar
                 </button>

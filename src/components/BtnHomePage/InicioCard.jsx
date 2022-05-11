@@ -1,7 +1,7 @@
 // import { useEffect } from 'react'
-export const InicioCard = ({ productos }) => {
+export const InicioCard = () => {
   // eslint-disable-next-line no-return-assign
-  const total = productos.reduce((counter, stock) => stock > '0' ? counter += 1 : counter, 0)
+  // const total = productos.reduce((counter, stock) => stock > '0' ? counter += 1 : counter, 0)
   return (
     <div className='col-xl-4'>
       <div className='stats stats-primary'>
@@ -11,7 +11,7 @@ export const InicioCard = ({ productos }) => {
             <i className='fas fa-cubes' />
           </div>
           <div className='stats-data'>
-            <div className='stats-number'>{total}</div>
+            <div className='stats-number'>0</div>
           </div>
         </div>
       </div>

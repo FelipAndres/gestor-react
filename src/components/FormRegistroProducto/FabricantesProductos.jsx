@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 
-const apiUrl = 'http://localhost:5000/api/productos/fabricantes'
+const apiURL = 'http://localhost:5000/api/productos/fabricantes'
 
 export const FabricantesProductos = () => {
   const [fabricantes, setFabricantes] = useState([])
@@ -9,7 +9,7 @@ export const FabricantesProductos = () => {
   //  creo que hacer un fetch por cada elemento no es buena idea pero por ahora funciona
   const fetchFabricantes = async () => {
     try {
-      const res = await fetch(apiUrl)
+      const res = await fetch(apiURL)
       if (!res.ok) {
         throw new Error(res.status)
         // toast.success('Datos cargados fabricantes')

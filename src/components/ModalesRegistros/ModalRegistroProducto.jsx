@@ -1,20 +1,18 @@
-
-import React from 'react'
+import React, { useContext } from 'react'
 import ReactDOM from 'react-dom'
+
 import FormRegistroProducto from '../FormRegistroProducto/FormRegistroProducto'
+import { ProductoContext } from '../../ProductoContext'
 import '../../styles.css'
 
-const ModalRegistroProducto = ({ setProducto, apiURL, isOpen, onClose }) => {
+const ModalRegistroProducto = () => {
+  const { isOpen } = useContext(ProductoContext)
   if (!isOpen) return null
   return ReactDOM.createPortal(
     <>
       <div className='darkBG'>
-        <div className='container mt-xl-5'>
-          <FormRegistroProducto
-            setProducto={setProducto}
-            apiURL={apiURL}
-            onClose={onClose}
-          />
+        <div className='container'>
+          <FormRegistroProducto />
         </div>
       </div>
     </>,

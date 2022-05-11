@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
@@ -8,13 +8,11 @@ import Productos from './pages/Productos'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/404Page'
 import ReportesPage from './pages/ReportesPage'
+import { ProductoContext } from './ProductoContext'
 
 export const App = () => {
-  const [productos, setProductos] = useState([])
-  const [producto, setProducto] = useState({})
-  const apiURL = 'http://localhost:5000/api/productos'
-
   // handle inputs on form
+  const { producto, setProductos, apiURL } = useContext(ProductoContext)
   // const handleChange = (event) => {
   //   const { name, value } = event.target
   //   setProducto((producto) => ({ ...producto, [name]: value }))
@@ -24,11 +22,10 @@ export const App = () => {
   const fechtProductos = async () => {
     try {
       const res = await fetch(apiURL)
-      if (res.ok) {
-        toast.success('Datos cargados')
-        // return res.json();
-      } else {
+      if (!res.ok) {
         throw new Error(res.status)
+        // toast.success('Datos cargados')
+        // return res.json();
       }
       const datos = await res.json()
       setProductos(datos)
@@ -47,20 +44,14 @@ export const App = () => {
           <div className='container-fluid'>
             <Routes>
               <Route
-                path='/' element={<HomePage
-                  productos={productos}
-                                  />}
+                path='/' element={<HomePage />}
               />
               <Route
-                path='administracion' element={<Productos
-                  productos={productos}
-                  setProductos={setProductos}
-                  producto={producto}
-                  setProducto={setProducto}
-                  apiURL={apiURL}
-                                               />}
+                path='administracion' element={<Productos />}
               />
-              <Route path='reportes' element={<ReportesPage productos={productos} />} />
+              <Route
+                path='reportes' element={<ReportesPage />}
+              />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 
-const apiUrl = 'http://localhost:5000/api/productos/tipos'
+const apiURL = 'http://localhost:5000/api/productos/tipos'
 
 export const FamiliaProducto = () => {
   const [tipos, setTipos] = useState([])
@@ -9,7 +9,7 @@ export const FamiliaProducto = () => {
 
   const fechtTipos = async () => {
     try {
-      const res = await fetch(apiUrl)
+      const res = await fetch(apiURL)
       if (!res.ok) {
         throw new Error(res.status)
       }
