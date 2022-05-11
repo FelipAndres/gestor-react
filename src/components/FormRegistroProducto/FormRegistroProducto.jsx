@@ -7,10 +7,11 @@ import { ProductoContext } from '../../ProductoContext'
 import '../../Spur.css'
 
 export const FormRegistroProducto = () => {
-  const { producto, setProducto, apiURL, setIsOpen, isEdit, setIsEdit } = useContext(ProductoContext)
+  const { producto, setProducto, apiURL, setIsOpen, isEdit, setIsEdit, method } = useContext(ProductoContext)
+
   // make post request with fecht api
-  // const [idProd, setIdProd] = useState()
   const [nombre, setNombre] = useState()
+  // CAMBIAR ESTAS VARIALES EN BD PLS, para no usar guion bajo...
   // eslint-disable-next-line camelcase
   const [familia_producto_id, setFamiliaprod] = useState()
   const [descripcion, setDescripcion] = useState()
@@ -46,25 +47,20 @@ export const FormRegistroProducto = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const httpMethod = {
-      method: 'POST',
+      method: method,
       body: JSON.stringify(objProducto),
       headers: new Headers({
         'Content-type': 'application/json'
       })
-    }
-    if (isEdit) {
-      httpMethod.method = 'PUT'
-      // eslint-disable-next-line no-const-assign
-      apiURL = 'http://localhost:5000/api/productos/' + {}
     }
     const httpReq = new Request(apiURL, httpMethod)
     try {
       const request = await fetch(httpReq)
       if (request.ok) {
         setProducto({ objProducto })
-        toast.success('Registro con éxito')
         setIsOpen(false)
         setIsEdit(false)
+        toast.success('Registro con éxito')
       } else {
         throw new Error(request.status)
       }
@@ -173,7 +169,10 @@ export const FormRegistroProducto = () => {
           </button>
           <button
             className='btn btn-danger float-right'
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false)
+              setIsEdit(false)
+            }}
           >
             Cancelar
           </button>

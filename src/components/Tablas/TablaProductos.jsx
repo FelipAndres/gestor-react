@@ -3,15 +3,17 @@ import { ProductoContext } from '../../ProductoContext'
 import '../../Spur.css'
 
 const TablaProductos = () => {
-  const { productos, setProducto, setIsOpen, setIsEdit } = useContext(ProductoContext)
-  const handleSubmit = async (productoId) => {
-    setIsEdit(true)
-    // event.preventDefault()
-    // console.log(productoId)
+  const { productos, setProducto, setIsOpen, setIsEdit, setMethod, setApiURL } = useContext(ProductoContext)
+
+  const editarProducto = async (productoId) => {
     const searchId = productoId
+    const id = searchId.toString()
     // Finding producto object with id xxx
     const searchObject = productos.find((producto) => producto.id === searchId)
-    // console.log(searchObject)
+    setIsOpen(true)
+    setIsEdit(true)
+    setMethod('PUT')
+    setApiURL('http://localhost:5000/api/productos/' + id)
     setProducto(searchObject)
   }
   return (
@@ -43,10 +45,7 @@ const TablaProductos = () => {
               <td>{producto.estado}</td>
               <td>
                 <button
-                  onClick={() => {
-                    handleSubmit(producto.id)
-                    setIsOpen(true)
-                  }} className='btn btn-warning'
+                  onClick={editarProducto(producto.id)} className='btn btn-warning'
                 >Editar
                 </button>
               </td>

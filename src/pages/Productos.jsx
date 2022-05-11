@@ -1,12 +1,28 @@
-import { Toaster } from 'react-hot-toast'
-import { useContext } from 'react'
+import { Toaster, toast } from 'react-hot-toast'
+import { useContext, useEffect } from 'react'
 
 import ModalRegistroProducto from '../components/ModalesRegistros/ModalRegistroProducto'
 import TablaProductos from '../components/Tablas/TablaProductos'
 import { ProductoContext } from '../ProductoContext'
 
 export const Productos = () => {
-  const { setIsOpen, setIsEdit, setProducto } = useContext(ProductoContext)
+  const { setIsOpen, setIsEdit, setProducto, setProductos, apiURL, setApiURL, producto, setMethod } = useContext(ProductoContext)
+  // fecht productos
+  const fechtProductos = async () => {
+    try {
+      const res = await fetch(apiURL)
+      if (!res.ok) {
+        throw new Error(res.status)
+        // toast.success('Datos cargados')
+        // return res.json();
+      }
+      const datos = await res.json()
+      setProductos(datos)
+    } catch (error) {
+      toast.error('Hubo un problema' + error)
+    }
+  }
+  useEffect(() => fechtProductos(), [producto])
   return (
     <>
       <h1 className='dash-title'>Gestiona - Productos</h1>
@@ -15,8 +31,10 @@ export const Productos = () => {
           <button
             onClick={() => {
               setIsOpen(true)
-              setProducto('')
               setIsEdit(false)
+              setProducto('')
+              setMethod('POST')
+              setApiURL('http://localhost:5000/api/productos')
             }} className='btn btn-lg btn-primary'
           >
             Añadir nuevo
