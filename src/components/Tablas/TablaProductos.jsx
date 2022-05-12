@@ -4,11 +4,12 @@ import { ProductoContext } from '../../ProductoContext'
 import '../../Spur.css'
 
 const TablaProductos = () => {
-  const { productos, setIsOpen, setIsEdit, setMethod, apiURL, setApiURL, setProducto } = useContext(ProductoContext)
+  const { del, setDelete, productos, setIsOpen, setIsEdit, setMethod, apiURL, setApiURL, setProducto } = useContext(ProductoContext)
 
   const setIdToApiURL = (productoId) => {
     const id = productoId.toString()
     setApiURL('http://localhost:5000/api/productos/' + id)
+    setDelete(true)
   }
   const editarProducto = (productoId) => {
     setMethod('PUT')
@@ -24,16 +25,19 @@ const TablaProductos = () => {
         'Content-type': 'application/json'
       })
     }
-    const httpReq = new Request(apiURL, httpMethod)
-    try {
-      const request = await fetch(httpReq)
-      if (request.ok) {
-        toast.success('Eliminado con éxito')
-      } else {
-        throw new Error(request.status)
+    if (del) {
+      const httpReq = new Request(apiURL, httpMethod)
+      try {
+        const request = await fetch(httpReq)
+        if (request.ok) {
+          toast.success('Eliminado con éxito')
+          setDelete(false)
+        } else {
+          throw new Error(request.status)
+        }
+      } catch (error) {
+        toast.error('Hubo un problema al eliminar', error)
       }
-    } catch (error) {
-      toast.error('Hubo un problema al eliminar', error)
     }
   }
   return (
@@ -41,7 +45,6 @@ const TablaProductos = () => {
       <table className='table table-hover table-in-card'>
         <thead>
           <tr>
-            <th scope='col'>ID</th>
             <th scope='col'>Nombre de producto</th>
             <th scope='col'>Tipo</th>
             <th scope='col'>Descripción</th>
@@ -55,7 +58,6 @@ const TablaProductos = () => {
         <tbody>
           {productos.map((producto) => (
             <tr key={producto.id}>
-              <td>{producto.id}</td>
               <td>{producto.nombre}</td>
               <td>{producto.familia_producto_id}</td>
               <td>{producto.descripcion}</td>
@@ -77,6 +79,7 @@ const TablaProductos = () => {
               <td>
                 <button
                   onClick={() => {
+                    setIdToApiURL(producto.id)
                     eliminarProducto()
                   }} className='btn btn-danger'
                 >Eliminar

@@ -23,6 +23,7 @@ export const Productos = () => {
     }
   }
   useEffect(() => fechtProductos(), [producto])
+  // use reducer hook
   return (
     <>
       <h1 className='dash-title'>Gestiona - Productos</h1>

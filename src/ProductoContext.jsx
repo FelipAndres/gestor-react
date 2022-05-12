@@ -9,6 +9,7 @@ export const ProductoProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [method, setMethod] = useState('POST')
+  const [del, setDelete] = useState(false)
   return (
     <ProductoContext.Provider value={{
       producto,
@@ -22,7 +23,9 @@ export const ProductoProvider = ({ children }) => {
       isEdit,
       setIsEdit,
       method,
-      setMethod
+      setMethod,
+      del,
+      setDelete
     }}
     >
       {children}
