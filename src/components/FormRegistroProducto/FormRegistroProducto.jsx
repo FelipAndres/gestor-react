@@ -7,7 +7,7 @@ import { ProductoContext } from '../../ProductoContext'
 import '../../Spur.css'
 
 export const FormRegistroProducto = () => {
-  const { producto, setProducto, apiURL, setIsOpen, isEdit, setIsEdit, method } = useContext(ProductoContext)
+  const { producto, setProducto, apiURL, setIsOpen, isEdit, setIsEdit, method, setApiURL } = useContext(ProductoContext)
 
   // make post request with fecht api
   const [nombre, setNombre] = useState()
@@ -60,7 +60,8 @@ export const FormRegistroProducto = () => {
         setProducto({ objProducto })
         setIsOpen(false)
         setIsEdit(false)
-        toast.success('Registro con éxito')
+        const text = isEdit ? 'Registro con éxito!' : 'Editado con éxito!'
+        toast.success(text)
       } else {
         throw new Error(request.status)
       }
@@ -172,6 +173,7 @@ export const FormRegistroProducto = () => {
             onClick={() => {
               setIsOpen(false)
               setIsEdit(false)
+              setApiURL('http://localhost:5000/api/productos')
             }}
           >
             Cancelar

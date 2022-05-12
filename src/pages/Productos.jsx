@@ -6,11 +6,11 @@ import TablaProductos from '../components/Tablas/TablaProductos'
 import { ProductoContext } from '../ProductoContext'
 
 export const Productos = () => {
-  const { setIsOpen, setIsEdit, setProducto, setProductos, apiURL, setApiURL, producto, setMethod } = useContext(ProductoContext)
+  const { setIsOpen, setIsEdit, setProducto, setProductos, setApiURL, producto, setMethod } = useContext(ProductoContext)
   // fecht productos
   const fechtProductos = async () => {
     try {
-      const res = await fetch(apiURL)
+      const res = await fetch('http://localhost:5000/api/productos')
       if (!res.ok) {
         throw new Error(res.status)
         // toast.success('Datos cargados')
@@ -30,11 +30,11 @@ export const Productos = () => {
         <div className='col-lg-12'>
           <button
             onClick={() => {
-              setIsOpen(true)
               setIsEdit(false)
-              setProducto('')
-              setMethod('POST')
+              setIsOpen(true)
               setApiURL('http://localhost:5000/api/productos')
+              setMethod('POST')
+              setProducto('')
             }} className='btn btn-lg btn-primary'
           >
             Añadir nuevo

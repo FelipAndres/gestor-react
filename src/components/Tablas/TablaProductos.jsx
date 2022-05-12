@@ -1,20 +1,40 @@
 import { useContext } from 'react'
+import { toast } from 'react-hot-toast'
 import { ProductoContext } from '../../ProductoContext'
 import '../../Spur.css'
 
 const TablaProductos = () => {
-  const { productos, setProducto, setIsOpen, setIsEdit, setMethod, setApiURL } = useContext(ProductoContext)
+  const { productos, setIsOpen, setIsEdit, setMethod, apiURL, setApiURL, setProducto } = useContext(ProductoContext)
 
-  const editarProducto = async (productoId) => {
-    const searchId = productoId
-    const id = searchId.toString()
-    // Finding producto object with id xxx
-    const searchObject = productos.find((producto) => producto.id === searchId)
-    setIsOpen(true)
-    setIsEdit(true)
-    setMethod('PUT')
+  const setIdToApiURL = (productoId) => {
+    const id = productoId.toString()
     setApiURL('http://localhost:5000/api/productos/' + id)
+  }
+  const editarProducto = (productoId) => {
+    setMethod('PUT')
+    // Finding producto object with id xxx
+    const searchObject = productos.find((producto) => producto.id === productoId)
     setProducto(searchObject)
+  }
+
+  const eliminarProducto = async () => {
+    const httpMethod = {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-type': 'application/json'
+      })
+    }
+    const httpReq = new Request(apiURL, httpMethod)
+    try {
+      const request = await fetch(httpReq)
+      if (request.ok) {
+        toast.success('Eliminado con éxito')
+      } else {
+        throw new Error(request.status)
+      }
+    } catch (error) {
+      toast.error('Hubo un problema al eliminar', error)
+    }
   }
   return (
     <>
@@ -45,11 +65,23 @@ const TablaProductos = () => {
               <td>{producto.estado}</td>
               <td>
                 <button
-                  onClick={editarProducto(producto.id)} className='btn btn-warning'
+                  onClick={() => {
+                    setIsEdit(true)
+                    setIsOpen(true)
+                    setIdToApiURL(producto.id)
+                    editarProducto(producto.id)
+                  }} className='btn btn-warning'
                 >Editar
                 </button>
               </td>
-              <td><button className='btn btn-danger'>Eliminar</button></td>
+              <td>
+                <button
+                  onClick={() => {
+                    eliminarProducto()
+                  }} className='btn btn-danger'
+                >Eliminar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
