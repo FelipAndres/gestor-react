@@ -7,7 +7,17 @@ import { ProductoContext } from '../../ProductoContext'
 import '../../Spur.css'
 
 export const FormRegistroProducto = () => {
-  const { producto, setProducto, apiURL, setIsOpen, isEdit, setIsEdit, method, setApiURL } = useContext(ProductoContext)
+  const {
+    producto,
+    setProducto,
+    apiURL,
+    isOpen,
+    setIsOpen,
+    isEdit,
+    setIsEdit,
+    method,
+    setApiURL
+  } = useContext(ProductoContext)
 
   // make post request with fecht api
   const [nombre, setNombre] = useState()
@@ -43,7 +53,7 @@ export const FormRegistroProducto = () => {
     fecha_registro,
     fabricante_id
   }
-  console.log(objProducto)
+  // console.log(objProducto)
   const handleSubmit = async (event) => {
     event.preventDefault()
     const httpMethod = {
@@ -58,9 +68,9 @@ export const FormRegistroProducto = () => {
       const request = await fetch(httpReq)
       if (request.ok) {
         setProducto({ objProducto })
-        setIsOpen(false)
-        setIsEdit(false)
-        const text = isEdit ? 'Registro con éxito!' : 'Editado con éxito!'
+        setIsOpen(!isOpen)
+        setIsEdit(isEdit)
+        const text = isEdit ? 'Editado con éxito!' : 'Registrado con éxito!'
         toast.success(text)
       } else {
         throw new Error(request.status)
@@ -75,7 +85,9 @@ export const FormRegistroProducto = () => {
         <div className='spur-card-icon'>
           <i className='fas fa-chart-bar' />
         </div>
-        <div className='spur-card-title'>{isEdit ? 'Editar Producto' : 'Registra Producto'}</div>
+        <div className='spur-card-title'>
+          {isEdit ? 'Editar Producto' : 'Registrar Producto'}
+        </div>
       </div>
       <div className='card-body'>
         <form onSubmit={handleSubmit}>
@@ -171,8 +183,8 @@ export const FormRegistroProducto = () => {
           <button
             className='btn btn-danger float-right'
             onClick={() => {
-              setIsOpen(false)
-              setIsEdit(false)
+              setIsOpen(!isOpen)
+              setIsEdit(isEdit)
               setApiURL('http://localhost:5000/api/productos')
             }}
           >

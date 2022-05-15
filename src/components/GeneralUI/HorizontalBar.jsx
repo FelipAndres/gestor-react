@@ -25,7 +25,7 @@ export const HBar = () => {
       </form>
       <div className='tools'>
         <a
-          href='https://github.com/HackerThemes/spur-template'
+          href='#'
           target='_blank'
           className='tools-item' rel='noreferrer'
         >
@@ -53,7 +53,7 @@ export const HBar = () => {
             <a className='dropdown-item' href='#!'>
               Profile
             </a>
-            <a className='dropdown-item' href='login.html'>
+            <a className='dropdown-item' href='#'>
               Logout
             </a>
           </div>

@@ -10,7 +10,7 @@ import { ProductoProvider } from './ProductoContext'
 
 export const App = () => {
   return (
-    <>
+    <div className='dash'>
       <NavBar />
       <div className='dash-app'>
         <HBar />
@@ -35,7 +35,7 @@ export const App = () => {
           </div>
         </main>
       </div>
-    </>
+    </div>
   )
 }
 export default App

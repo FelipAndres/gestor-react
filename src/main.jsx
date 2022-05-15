@@ -8,7 +8,7 @@ const rootElement = document.getElementById('root')
 
 render(
   <BrowserRouter>
-    <App className='dash' />
+    <App />
   </BrowserRouter>,
   rootElement
 )

@@ -18,7 +18,6 @@ export const FabricantesProductos = () => {
       const datos = await res.json()
       //  es mejor descontrouir el request pa solo usar lo que se necesita
       setFabricantes(datos)
-      console.log()
     } catch (error) {
       toast.error('Hubo un problema ' + error)
     }

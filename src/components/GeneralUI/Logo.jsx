@@ -6,9 +6,8 @@ export const Logo = () => {
         <i className='fas fa-bars' />
       </Link>
       <Link to='/' className='spur-logo'>
-        <i className='fas fa-bolt'>
-          <span> Gestor</span>
-        </i>
+        <i className='fas fa-box' />
+        <span>GESTOR</span>
       </Link>
     </header>
   )

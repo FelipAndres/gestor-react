@@ -2,15 +2,15 @@ import Logo from './Logo'
 import Navegation from './Navegation'
 import '../../Spur.css'
 
-const MainContainer = ({ children }) => {
+const Nav = ({ children }) => {
   return <div className='dash-nav dash-nav-dark'>{children}</div>
 }
 export const NavBar = () => {
   return (
-    <MainContainer>
+    <Nav>
       <Logo />
       <Navegation />
-    </MainContainer>
+    </Nav>
   )
 }
 
