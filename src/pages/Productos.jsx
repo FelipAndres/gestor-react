@@ -27,12 +27,16 @@ export const Productos = () => {
         throw new Error(res.status)
       }
       const listadoProductos = await res.json()
+      console.log(listadoProductos)
       setProductos(listadoProductos)
     } catch (error) {
       toast.error('Hubo un problema' + error)
     }
   }
-  useEffect(() => fechtProductos(), [producto, del])
+
+  useEffect(() =>
+    fechtProductos()
+  , [producto, del])
   // use reducer hook here?
   return (
     <>

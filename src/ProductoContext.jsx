@@ -9,6 +9,7 @@ export const ProductoProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [method, setMethod] = useState('POST')
+
   return (
     <ProductoContext.Provider value={{
       producto,

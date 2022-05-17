@@ -1,21 +1,23 @@
-import toast, { Toaster } from 'react-hot-toast'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 
 import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
 import { ProductoContext } from '../../ProductoContext'
+import { useFetchBody } from '../../hooks/fetchBodyHook'
 import '../../Spur.css'
 
+import toast, { Toaster } from 'react-hot-toast'
+
 export const FormRegistroProducto = () => {
+  const isComponentMounted = useRef(true)
+  const [isSubmitt, setIsSubmitt] = useState(false)
   const {
     producto,
-    setProducto,
-    apiURL,
+    // setProducto,
     isOpen,
     setIsOpen,
     isEdit,
     setIsEdit,
-    method,
     setApiURL
   } = useContext(ProductoContext)
 
@@ -53,31 +55,31 @@ export const FormRegistroProducto = () => {
     fecha_registro,
     fabricante_id
   }
-  // console.log(objProducto)
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    const httpMethod = {
-      method: method,
-      body: JSON.stringify(objProducto),
-      headers: new Headers({
-        'Content-type': 'application/json'
-      })
-    }
-    const httpReq = new Request(apiURL, httpMethod)
-    try {
-      const request = await fetch(httpReq)
-      if (request.ok) {
-        setProducto({ objProducto })
-        setIsOpen(!isOpen)
-        setIsEdit(isEdit)
-        const text = isEdit ? 'Editado con éxito!' : 'Registrado con éxito!'
-        toast.success(text)
-      } else {
-        throw new Error(request.status)
+  const guardarProducto = () => {
+      const { status, error } = useFetchBody(
+        'http://localhost:5000/api/productos',
+        isComponentMounted,
+        objProducto,
+        'POST'
+      )
+      console.log(status)
+      try {
+        if (status.ok) {
+          setIsOpen(!isOpen)
+          setIsEdit(isEdit)
+          const text = isEdit ? 'Editado con éxito!' : 'Registrado con éxito!'
+          toast.success(text)
+        }
+      } catch (err) {
+        toast.error('Hubo un problema al registrar' + error)
+        console.error(error)
       }
-    } catch (error) {
-      toast.error('Hubo un problema al registrar', error)
     }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    setIsSubmitt(true)
   }
   return (
     <div className='card spur-card appear-animate modal-lg mx-auto mt-5'>
