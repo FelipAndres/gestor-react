@@ -1,24 +1,23 @@
-import { useState, useEffect, useContext, useRef } from 'react'
+
+import { useState, useEffect, useContext } from 'react'
 
 import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
 import { ProductoContext } from '../../ProductoContext'
-import { useFetchBody } from '../../hooks/fetchBodyHook'
 import '../../Spur.css'
 
 import toast, { Toaster } from 'react-hot-toast'
+import { useFetch } from '../../hooks/FetchHook'
 
 export const FormRegistroProducto = () => {
-  const isComponentMounted = useRef(true)
-  const [isSubmitt, setIsSubmitt] = useState(false)
+  // const isComponentMounted = useRef(true)
   const {
     producto,
-    // setProducto,
+    setProducto,
     isOpen,
     setIsOpen,
     isEdit,
-    setIsEdit,
-    setApiURL
+    setIsEdit
   } = useContext(ProductoContext)
 
   // make post request with fecht api
@@ -55,31 +54,23 @@ export const FormRegistroProducto = () => {
     fecha_registro,
     fabricante_id
   }
-  const guardarProducto = () => {
-      const { status, error } = useFetchBody(
-        'http://localhost:5000/api/productos',
-        isComponentMounted,
-        objProducto,
-        'POST'
-      )
-      console.log(status)
-      try {
-        if (status.ok) {
-          setIsOpen(!isOpen)
-          setIsEdit(isEdit)
-          const text = isEdit ? 'Editado con éxito!' : 'Registrado con éxito!'
-          toast.success(text)
-        }
-      } catch (err) {
-        toast.error('Hubo un problema al registrar' + error)
-        console.error(error)
-      }
-    }
-  }
-
+  const [{ response, isLoading, error }, doFetch] = useFetch(
+    'http://localhost:5000/api/productos'
+  )
   const handleSubmit = (event) => {
     event.preventDefault()
-    setIsSubmitt(true)
+    doFetch({
+      method: 'post',
+      data: objProducto
+    })
+    console.count('renders: ')
+    console.log('response ' + response)
+    console.log('isLoading ' + isLoading)
+    console.log('error ' + error)
+
+    toast.success('Registrado con éxito')
+    setProducto(objProducto)
+    setIsOpen(false)
   }
   return (
     <div className='card spur-card appear-animate modal-lg mx-auto mt-5'>
@@ -187,7 +178,6 @@ export const FormRegistroProducto = () => {
             onClick={() => {
               setIsOpen(!isOpen)
               setIsEdit(isEdit)
-              setApiURL('http://localhost:5000/api/productos')
             }}
           >
             Cancelar

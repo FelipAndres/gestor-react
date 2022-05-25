@@ -1,23 +1,25 @@
-import { useFetch } from '../../hooks/fetchHook2'
-import { useRef } from 'react'
+import { useEffect } from 'react'
+import { useFetch } from '../../hooks/fetchHook'
 
 export const FabricantesProductos = () => {
   // esto es para que solo haga fecth si el componente esta "renderizado" y usa el hook useRef
-  const isComponentMounted = useRef(true)
-  const { data, loading } = useFetch(
-    'http://localhost:5000/api/productos/fabricantes',
-    isComponentMounted,
-    []
+  // const isComponentMounted = useRef(true)
+  const [{ response }, doFetch] = useFetch(
+    'http://localhost:5000/api/productos/fabricantes'
   )
+  useEffect(() => {
+    doFetch()
+  }, [doFetch])
+
   return (
     <>
       <option value='Selecciona un fabricante'>Selecciona un fabricante</option>
-      {loading
+      {!response
         ? (
           <option>Cargando datos...</option>
           )
         : (
-            data.map((fabricantes) =>
+            response.map((fabricantes) =>
               <option
                 key={fabricantes.id}
                 value={fabricantes.id}

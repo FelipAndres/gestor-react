@@ -1,5 +1,5 @@
-import { Toaster, toast } from 'react-hot-toast'
-import { useContext, useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
+import { useContext } from 'react'
 
 import ModalRegistroProducto from '../components/ModalesRegistros/ModalRegistroProducto'
 import TablaProductos from '../components/Tablas/TablaProductos'
@@ -7,37 +7,14 @@ import { ProductoContext } from '../ProductoContext'
 
 export const Productos = () => {
   const {
-    del,
     isOpen,
     setIsOpen,
     isEdit,
     setIsEdit,
-    setProducto,
-    setProductos,
-    setApiURL,
-    producto,
-    setMethod
+    setProducto
+
   } = useContext(ProductoContext)
 
-  // fecht productos
-  const fechtProductos = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/api/productos')
-      if (!res.ok) {
-        throw new Error(res.status)
-      }
-      const listadoProductos = await res.json()
-      console.log(listadoProductos)
-      setProductos(listadoProductos)
-    } catch (error) {
-      toast.error('Hubo un problema' + error)
-    }
-  }
-
-  useEffect(() =>
-    fechtProductos()
-  , [producto, del])
-  // use reducer hook here?
   return (
     <>
       <h1 className='dash-title'>Gestiona - Productos</h1>
@@ -47,8 +24,6 @@ export const Productos = () => {
             onClick={() => {
               setIsEdit(isOpen)
               setIsOpen(!isEdit)
-              setApiURL('http://localhost:5000/api/productos')
-              setMethod('POST')
               setProducto('')
             }} className='btn btn-lg btn-primary'
           >
