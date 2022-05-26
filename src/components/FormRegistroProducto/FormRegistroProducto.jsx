@@ -1,13 +1,11 @@
-
 import { useState, useEffect, useContext } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
-import { ProductoContext } from '../../ProductoContext'
+import ProductoContext from '../../ProductoContext'
+import useFetch from '../../hooks/FetchHook'
 import '../../Spur.css'
-
-import toast, { Toaster } from 'react-hot-toast'
-import { useFetch } from '../../hooks/FetchHook'
 
 export const FormRegistroProducto = () => {
   // const isComponentMounted = useRef(true)
@@ -54,7 +52,7 @@ export const FormRegistroProducto = () => {
     fecha_registro,
     fabricante_id
   }
-  const [{ response, isLoading, error }, doFetch] = useFetch(
+  const [{ response, error }, doFetch] = useFetch(
     'http://localhost:5000/api/productos'
   )
   const handleSubmit = (event) => {
@@ -63,14 +61,18 @@ export const FormRegistroProducto = () => {
       method: 'post',
       data: objProducto
     })
-    console.count('renders: ')
-    console.log('response ' + response)
-    console.log('isLoading ' + isLoading)
-    console.log('error ' + error)
 
-    toast.success('Registrado con éxito')
-    setProducto(objProducto)
-    setIsOpen(false)
+    if (error) {
+      toast.error('Problemas con el servidor ' + error)
+    } else {
+      if (!response) {
+        toast.success('Producto registrado con exito')
+        setProducto(objProducto)
+        setIsOpen(!isOpen)
+      } else {
+        toast.error('Problema al registrar')
+      }
+    }
   }
   return (
     <div className='card spur-card appear-animate modal-lg mx-auto mt-5'>

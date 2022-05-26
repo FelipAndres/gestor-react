@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import ReactDOM from 'react-dom'
 
 import FormRegistroProducto from '../FormRegistroProducto/FormRegistroProducto'
-import { ProductoContext } from '../../ProductoContext'
+import ProductoContext from '../../ProductoContext'
 import '../../styles.css'
 
 const ModalRegistroProducto = () => {

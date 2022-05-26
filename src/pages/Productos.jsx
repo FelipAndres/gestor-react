@@ -3,7 +3,7 @@ import { useContext } from 'react'
 
 import ModalRegistroProducto from '../components/ModalesRegistros/ModalRegistroProducto'
 import TablaProductos from '../components/Tablas/TablaProductos'
-import { ProductoContext } from '../ProductoContext'
+import ProductoContext from '../ProductoContext'
 
 export const Productos = () => {
   const {

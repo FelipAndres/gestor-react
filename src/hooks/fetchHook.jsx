@@ -1,33 +1,39 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:5000/api/productos'
-
-/**
- fixed :
-  - no need to JSON.stringify to then immediatly do a JSON.parse
-  - don't use export defaults, because default imports are hard to search for
-  - axios already support generic request in one parameter, no need to call specialized ones
-**/
-export const useFetch = (axiosParams) => {
+export const useFetch = (url) => {
   const [response, setResponse] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [options, setOptions] = useState({})
 
-  const fetchData = async (params) => {
-    try {
-      const result = await axios.request(params)
-      setResponse(result)
-    } catch (error) {
-      setError(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const doFetch = useCallback((options = {}) => {
+    setOptions(options)
+    setIsLoading(true)
+    console.log('fecheando')
+  }, [])
 
   useEffect(() => {
-    fetchData(axiosParams)
-  }, []) // execute once only
+    if (!isLoading) {
+      return
+    }
 
-  return { response, error, loading, fetchData }
+    const fetchData = async () => {
+      console.log('en el useffect y fetchData')
+      try {
+        const res = await axios(url, options)
+        setResponse(res.data)
+      } catch (err) {
+        const data = err.response ? err.response.data : 'Server error'
+        setError(data)
+      }
+      console.log('termino el fetch')
+      setIsLoading(false)
+    }
+    fetchData()
+  }, [isLoading, options, url])
+
+  return [{ response, error, isLoading }, doFetch]
 }
+
+export default useFetch

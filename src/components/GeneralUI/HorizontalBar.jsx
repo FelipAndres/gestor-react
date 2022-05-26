@@ -1,4 +1,5 @@
 import '../../Spur.css'
+
 export const HBar = () => {
   return (
     <header className='dash-toolbar'>

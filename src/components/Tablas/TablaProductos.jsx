@@ -1,16 +1,25 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 
-import { useFetch } from '../../hooks/fetchHook'
-import { Loading } from '../Loading'
+import ProductoContext from '../../ProductoContext'
+import useFetch from '../../hooks/fetchHook'
+import Loading from '../Loading'
 import '../../Spur.css'
 
 const TablaProductos = () => {
+  const {
+    producto,
+    isOpen,
+    setIsOpen,
+    isEdit,
+    setIsEdit
+  } = useContext(ProductoContext)
+
   // fecht productos
   const [{ response, error, isLoading }, doFetch] = useFetch(
     'http://localhost:5000/api/productos'
   )
   useEffect(() => doFetch()
-    , [doFetch])
+    , [doFetch, producto])
 
   console.count('Tabla productos')
   console.log(response + ' response')
@@ -50,8 +59,8 @@ const TablaProductos = () => {
                       <td>
                         <button
                           onClick={() => {
-                          // setIsEdit(true)
-                          // setIsOpen(true)
+                            setIsEdit(!isEdit)
+                            setIsOpen(!isOpen)
                           }} className='btn btn-warning'
                         >Editar
                         </button>
