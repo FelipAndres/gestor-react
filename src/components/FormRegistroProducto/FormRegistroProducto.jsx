@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
@@ -52,7 +52,7 @@ export const FormRegistroProducto = () => {
     fecha_registro,
     fabricante_id
   }
-  const [{ response, error }, doFetch] = useFetch(
+  const [{ isLoading, error }, doFetch] = useFetch(
     'http://localhost:5000/api/productos'
   )
   const handleSubmit = (event) => {
@@ -61,16 +61,16 @@ export const FormRegistroProducto = () => {
       method: 'post',
       data: objProducto
     })
-
-    if (error) {
-      toast.error('Problemas con el servidor ' + error)
+    // validar si ocurre un error o no con el destructuring de useFetch
+    if (isLoading) {
+      console.log('esperando el registro')
     } else {
-      if (!response) {
-        toast.success('Producto registrado con exito')
+      if (error) {
+        console.error(error)
+      } else {
         setProducto(objProducto)
         setIsOpen(!isOpen)
-      } else {
-        toast.error('Problema al registrar')
+        toast.success('Registrado con exito')
       }
     }
   }
@@ -184,7 +184,6 @@ export const FormRegistroProducto = () => {
           >
             Cancelar
           </button>
-          <Toaster position='bottom-center' />
         </form>
       </div>
     </div>
