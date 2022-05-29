@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
-import toast from 'react-hot-toast'
 
 import FamiliaProductos from './FamiliaProductos'
 import FabricantesProductos from './FabricantesProductos'
 import ProductoContext from '../../ProductoContext'
 import useFetch from '../../hooks/FetchHook'
 import '../../Spur.css'
+import toast from 'react-hot-toast'
 
 export const FormRegistroProducto = () => {
   // const isComponentMounted = useRef(true)
@@ -15,7 +15,8 @@ export const FormRegistroProducto = () => {
     isOpen,
     setIsOpen,
     isEdit,
-    setIsEdit
+    setIsEdit,
+    apiURL
   } = useContext(ProductoContext)
 
   // make post request with fecht api
@@ -30,9 +31,11 @@ export const FormRegistroProducto = () => {
   const [fecha_registro, setFecha] = useState()
   // eslint-disable-next-line camelcase
   const [fabricante_id, setFabricante] = useState()
+  const [{ response, error }, doFetch] = useFetch(apiURL)
 
+  // para rellenar el form cuando se edita
   useEffect(() => {
-    if (Object.keys(producto).length > 0) {
+    if (producto) {
       setNombre(producto.nombre)
       setFamiliaprod(producto.familia_producto_id)
       setDescripcion(producto.descripcion)
@@ -52,28 +55,35 @@ export const FormRegistroProducto = () => {
     fecha_registro,
     fabricante_id
   }
-  const [{ isLoading, error }, doFetch] = useFetch(
-    'http://localhost:5000/api/productos'
-  )
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    if (response === 'OK') {
+      console.count('formulario')
+      setProducto(objProducto)
+      setIsOpen(!isOpen)
+      toast.success('Registrado con éxito')
+    }
+    if (error) {
+      toast.error('Problema al registrar ' + error)
+    }
+  }, [response, error])
+
+  const handleSubmitPost = (event) => {
     event.preventDefault()
     doFetch({
       method: 'post',
       data: objProducto
     })
-    // validar si ocurre un error o no con el destructuring de useFetch
-    if (isLoading) {
-      console.log('esperando el registro')
-    } else {
-      if (error) {
-        console.error(error)
-      } else {
-        setProducto(objProducto)
-        setIsOpen(!isOpen)
-        toast.success('Registrado con exito')
-      }
-    }
+
+    // validaPost()
+    // validar si ocurre un error o no con el destructuring de useFetch{
   }
+
+  /*  const validaPost = () => {
+    console.count('form productos')
+    console.log(response + ' response')
+    console.log(error + ' error')
+    console.log(isLoading + ' isLoading')
+  } */
   return (
     <div className='card spur-card appear-animate modal-lg mx-auto mt-5'>
       <div className='card-header'>
@@ -85,7 +95,7 @@ export const FormRegistroProducto = () => {
         </div>
       </div>
       <div className='card-body'>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitPost}>
           <div className='form-row'>
             <div className='form-group col-md-6'>
               <label htmlFor='nombre'>Nombre</label>
@@ -172,14 +182,14 @@ export const FormRegistroProducto = () => {
               />
             </div>
           </div>
-          <button onClick={handleSubmit} className='btn btn-primary ml-2 float-right'>
+          <button onClick={handleSubmitPost} className='btn btn-primary ml-2 float-right'>
             {isEdit ? 'Editar' : 'Registrar'}
           </button>
           <button
             className='btn btn-danger float-right'
             onClick={() => {
               setIsOpen(!isOpen)
-              setIsEdit(isEdit)
+              isEdit && setIsEdit(!isEdit)
             }}
           >
             Cancelar

@@ -10,7 +10,7 @@ export const useFetch = (url) => {
   const doFetch = useCallback((options = {}) => {
     setOptions(options)
     setIsLoading(true)
-    console.log('fecheando')
+    console.count('en do Fetch')
   }, [])
 
   useEffect(() => {
@@ -19,15 +19,14 @@ export const useFetch = (url) => {
     }
 
     const fetchData = async () => {
-      console.log('en el useffect y fetchData')
       try {
         const res = await axios(url, options)
         setResponse(res.data)
+        console.log('set response data')
       } catch (err) {
         const data = err.response ? err.response.data : 'Server error'
         setError(data)
       }
-      console.log('termino el fetch')
       setIsLoading(false)
     }
     fetchData()

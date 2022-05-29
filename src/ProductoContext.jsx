@@ -7,17 +7,20 @@ export const ProductoProvider = ({ children }) => {
   const [producto, setProducto] = useState({})
   const [isOpen, setIsOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
+  const [apiURL, setApiURL] = useState('http://localhost:5000/api/productos')
 
   return (
     <ProductoContext.Provider value={{
-      producto,
-      setProducto,
       productos,
       setProductos,
+      producto,
+      setProducto,
       isOpen,
       setIsOpen,
       isEdit,
-      setIsEdit
+      setIsEdit,
+      apiURL,
+      setApiURL
     }}
     >
       {children}

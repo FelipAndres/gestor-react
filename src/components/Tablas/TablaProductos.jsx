@@ -11,21 +11,34 @@ const TablaProductos = () => {
     isOpen,
     setIsOpen,
     isEdit,
-    setIsEdit
+    setIsEdit,
+    apiURL,
+    setApiURL
   } = useContext(ProductoContext)
 
   // fecht productos
-  const [{ response, error, isLoading }, doFetch] = useFetch(
-    'http://localhost:5000/api/productos'
-  )
-  useEffect(() => doFetch()
-    , [doFetch, producto])
+  const [{ response }, doFetch] = useFetch(apiURL)
 
-  console.count('Tabla productos')
-  console.log(response + ' response')
-  console.log(error + ' error')
-  console.log(isLoading + ' isLoading')
+  useEffect(() => (doFetch())
+    , [doFetch, producto])
+  // setear productos con response
+
+  // console.count('Tabla productos')
+  // console.log(response + ' response')
+  // console.log(error + ' error')
+  // console.log(isLoading + ' isLoading')
   // validar error tambienpls jsjs
+
+  const editProducto = (id) => {
+  // Finding producto object with id xxx
+    const searchObject = response.find((producto) => producto.id === id)
+    console.log(searchObject)
+    // setProducto(searchObject)
+  }
+  const setIdToApiURL = (id) => {
+  // const id = productoId.toString()
+    setApiURL((prev) => prev + '/' + id)
+  }
   return (
     <>
       {response
@@ -58,6 +71,8 @@ const TablaProductos = () => {
                       onClick={() => {
                         setIsEdit(!isEdit)
                         setIsOpen(!isOpen)
+                        editProducto(producto.id)
+                        setIdToApiURL(producto.id)
                       }} className='btn btn-warning'
                     >Editar
                     </button>

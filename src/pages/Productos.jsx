@@ -8,11 +8,7 @@ import ProductoContext from '../ProductoContext'
 export const Productos = () => {
   const {
     isOpen,
-    setIsOpen,
-    isEdit,
-    setIsEdit,
-    setProducto
-
+    setIsOpen
   } = useContext(ProductoContext)
 
   return (
@@ -22,9 +18,7 @@ export const Productos = () => {
         <div className='col-lg-12'>
           <button
             onClick={() => {
-              setIsEdit(isOpen)
-              setIsOpen(!isEdit)
-              setProducto('')
+              setIsOpen(!isOpen)
             }} className='btn btn-lg btn-primary'
           >
             Añadir nuevo
