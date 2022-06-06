@@ -8,7 +8,8 @@ import ProductoContext from '../ProductoContext'
 export const Productos = () => {
   const {
     isOpen,
-    setIsOpen
+    setIsOpen,
+    setProducto
   } = useContext(ProductoContext)
 
   return (
@@ -19,11 +20,11 @@ export const Productos = () => {
           <button
             onClick={() => {
               setIsOpen(!isOpen)
+              setProducto('')
             }} className='btn btn-lg btn-primary'
           >
             Añadir nuevo
           </button>
-          <ModalRegistroProducto />
         </div>
       </div>
       <div className='row'>
@@ -42,6 +43,7 @@ export const Productos = () => {
           </div>
         </div>
       </div>
+      <ModalRegistroProducto />
     </>
   )
 }

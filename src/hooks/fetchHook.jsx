@@ -6,6 +6,7 @@ export const useFetch = (url) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const [options, setOptions] = useState({})
+  const [status, setStatus] = useState()
 
   const doFetch = useCallback((options = {}) => {
     setOptions(options)
@@ -23,6 +24,8 @@ export const useFetch = (url) => {
         const res = await axios(url, options)
         setResponse(res.data)
         console.log('set response data')
+        setStatus(res.statusText)
+        console.log('set status data')
       } catch (err) {
         const data = err.response ? err.response.data : 'Server error'
         setError(data)
@@ -32,7 +35,7 @@ export const useFetch = (url) => {
     fetchData()
   }, [isLoading, options, url])
 
-  return [{ response, error, isLoading }, doFetch]
+  return [{ response, error, isLoading, status }, doFetch]
 }
 
 export default useFetch

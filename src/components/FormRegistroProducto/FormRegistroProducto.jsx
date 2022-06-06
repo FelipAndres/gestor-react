@@ -11,12 +11,13 @@ export const FormRegistroProducto = () => {
   // const isComponentMounted = useRef(true)
   const {
     producto,
-    setProducto,
     isOpen,
     setIsOpen,
     isEdit,
     setIsEdit,
-    apiURL
+    apiURL,
+    reload,
+    setReload
   } = useContext(ProductoContext)
 
   // make post request with fecht api
@@ -55,17 +56,23 @@ export const FormRegistroProducto = () => {
     fecha_registro,
     fabricante_id
   }
+
   useEffect(() => {
-    if (response === 'OK') {
-      console.count('formulario')
-      setProducto(objProducto)
+    if (response === 'Created') {
       setIsOpen(!isOpen)
+      setReload(!reload)
       toast.success('Registrado con éxito')
     }
+    if (response === 'OK') {
+      setIsOpen(!isOpen)
+      setReload(!reload)
+      toast.success('Editado con éxito')
+    }
     if (error) {
+      // algo
       toast.error('Problema al registrar ' + error)
     }
-  }, [response, error])
+  }, [response])
 
   const handleSubmitPost = (event) => {
     event.preventDefault()
@@ -73,17 +80,16 @@ export const FormRegistroProducto = () => {
       method: 'post',
       data: objProducto
     })
-
-    // validaPost()
-    // validar si ocurre un error o no con el destructuring de useFetch{
+  }
+  const handleSubmitPut = (event) => {
+    event.preventDefault()
+    doFetch({
+      method: 'put',
+      data: objProducto
+    })
+    setIsEdit(!isEdit)
   }
 
-  /*  const validaPost = () => {
-    console.count('form productos')
-    console.log(response + ' response')
-    console.log(error + ' error')
-    console.log(isLoading + ' isLoading')
-  } */
   return (
     <div className='card spur-card appear-animate modal-lg mx-auto mt-5'>
       <div className='card-header'>
@@ -95,7 +101,7 @@ export const FormRegistroProducto = () => {
         </div>
       </div>
       <div className='card-body'>
-        <form onSubmit={handleSubmitPost}>
+        <form>
           <div className='form-row'>
             <div className='form-group col-md-6'>
               <label htmlFor='nombre'>Nombre</label>
@@ -178,11 +184,12 @@ export const FormRegistroProducto = () => {
                 className='form-control'
                 // eslint-disable-next-line camelcase
                 value={fecha_registro || ''}
+                // defaultValue={new Date('dd/mm/yyyy')}
                 onChange={(e) => setFecha(e.target.value)}
               />
             </div>
           </div>
-          <button onClick={handleSubmitPost} className='btn btn-primary ml-2 float-right'>
+          <button onClick={isEdit ? handleSubmitPut : handleSubmitPost} className='btn btn-primary ml-2 float-right'>
             {isEdit ? 'Editar' : 'Registrar'}
           </button>
           <button

@@ -1,4 +1,4 @@
-export const InicioCardBtn2 = (stock, setStock, handleChange) => {
+export const DisminuirStock = (stock, setStock, handleChange) => {
   return (
     <div className='col-xl-6'>
       <form action=''>
@@ -29,4 +29,4 @@ export const InicioCardBtn2 = (stock, setStock, handleChange) => {
     </div>
   )
 }
-export default InicioCardBtn2
+export default DisminuirStock

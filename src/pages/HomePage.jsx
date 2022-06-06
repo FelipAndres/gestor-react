@@ -1,13 +1,14 @@
-// import { useState } from 'react'
+
+import { Toaster } from 'react-hot-toast'
+
 import InicioCard from '../components/BtnHomePage/InicioCard'
 import InicioCard1 from '../components/BtnHomePage/InicioCard1'
 import InicioCard2 from '../components/BtnHomePage/InicioCard2'
 import InicioCard3 from '../components/BtnHomePage/InicioCard3'
-import InicioCardBtn1 from '../components/BtnHomePage/InicioCardBtn1'
-import InicioCardBtn2 from '../components/BtnHomePage/InicioCardBtn2'
+import AgregarStock from '../components/BtnHomePage/AgregarStock'
+import DisminuirStock from '../components/BtnHomePage/DisminuirStock'
 
 export const HomePage = () => {
-  // const [stock, setStock] = useState({})
   return (
     <>
       <div className='row dash-row'>
@@ -17,8 +18,9 @@ export const HomePage = () => {
         <InicioCard3 />
       </div>
       <div className='row dash-row'>
-        <InicioCardBtn1 />
-        <InicioCardBtn2 />
+        <AgregarStock />
+        <DisminuirStock />
+        <Toaster position='bottom-center' />
       </div>
     </>
   )

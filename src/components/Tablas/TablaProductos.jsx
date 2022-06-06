@@ -1,47 +1,74 @@
 import { useEffect, useContext } from 'react'
-
+// import toast from 'react-hot-toast'
 import ProductoContext from '../../ProductoContext'
 import useFetch from '../../hooks/fetchHook'
 import Loading from '../Loading'
 import '../../Spur.css'
+import toast from 'react-hot-toast'
 
 const TablaProductos = () => {
   const {
-    producto,
+    setProducto,
+    productos,
+    setProductos,
     isOpen,
     setIsOpen,
     isEdit,
     setIsEdit,
     apiURL,
-    setApiURL
+    setApiURL,
+    reload,
+    setReload
   } = useContext(ProductoContext)
 
-  // fecht productos
+  // fetch productos
   const [{ response }, doFetch] = useFetch(apiURL)
 
-  useEffect(() => (doFetch())
-    , [doFetch, producto])
-  // setear productos con response
+  useEffect(() => {
+    setApiURL('http://localhost:5000/api/productos')
+    doFetch()
+  }
+  , [doFetch, reload])
 
-  // console.count('Tabla productos')
-  // console.log(response + ' response')
-  // console.log(error + ' error')
-  // console.log(isLoading + ' isLoading')
-  // validar error tambienpls jsjs
+  useEffect(() => {
+    if (!isString(response)) {
+      setProductos(response)
+    }
+  }, [response])
+
+  useEffect(() => {
+    if (response === 'OK') {
+      setReload(!reload)
+      toast.success('Eliminado con éxito')
+    }
+  }, [response])
+
+  function isString (objValue) {
+    return (
+      objValue &&
+      typeof objValue === 'string' &&
+      objValue.constructor === String
+    )
+  }
 
   const editProducto = (id) => {
   // Finding producto object with id xxx
     const searchObject = response.find((producto) => producto.id === id)
-    console.log(searchObject)
-    // setProducto(searchObject)
+    setProducto(searchObject)
   }
   const setIdToApiURL = (id) => {
   // const id = productoId.toString()
     setApiURL((prev) => prev + '/' + id)
   }
+  const handleSubmitDel = () => {
+    doFetch({
+      method: 'delete'
+    })
+  }
+
   return (
     <>
-      {response
+      {productos
         ? (
           <table className='table table-hover table-in-card'>
             <thead>
@@ -57,7 +84,7 @@ const TablaProductos = () => {
               </tr>
             </thead>
             <tbody>
-              {response.map((producto) => (
+              {productos.map((producto) => (
                 <tr key={producto.id}>
                   <td>{producto.nombre}</td>
                   <td>{producto.familia_producto_id}</td>
@@ -71,8 +98,8 @@ const TablaProductos = () => {
                       onClick={() => {
                         setIsEdit(!isEdit)
                         setIsOpen(!isOpen)
-                        editProducto(producto.id)
                         setIdToApiURL(producto.id)
+                        editProducto(producto.id)
                       }} className='btn btn-warning'
                     >Editar
                     </button>
@@ -80,7 +107,8 @@ const TablaProductos = () => {
                   <td>
                     <button
                       onClick={() => {
-                      // eliminarProducto()
+                        setIdToApiURL(producto.id)
+                        handleSubmitDel()
                       }} className='btn btn-danger'
                     >Eliminar
                     </button>

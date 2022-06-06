@@ -18,7 +18,11 @@ export const App = () => {
           <div className='container-fluid'>
             <Routes>
               <Route
-                path='/' element={<HomePage />}
+                path='/' element={
+                  <ProductoProvider>
+                    <HomePage />
+                  </ProductoProvider>
+                }
               />
               <Route
                 path='administracion' element={
